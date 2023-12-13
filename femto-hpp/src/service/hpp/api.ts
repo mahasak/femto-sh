@@ -1,4 +1,4 @@
-import { genChannelData, setCurrentOrderId } from "@mahasak/femto-shared/data";
+import { genChannelData, setCurrentOrderId } from "@femto-sh/femto-shared/data";
 
 export interface CreateInvoicePayload {
   buyer_id: string;

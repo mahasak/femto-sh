@@ -2,9 +2,9 @@ import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 import bodyParser from 'body-parser';
-import {redisClient}   from "@mahasak/femto-shared/cache";
+import {redisClient}   from "@femto-sh/femto-shared/cache";
 import {changeHook, messageHook, postbackHook } from './service/hpp/webhook';
-import { ChangesEvent, MessagingEvent } from '@mahasak/femto-shared/types';
+import { ChangesEvent, MessagingEvent } from '@femto-sh/femto-shared/types';
 
 const app: Express = express();
 const port = process.env.SERVER_PORT ?? 8082;

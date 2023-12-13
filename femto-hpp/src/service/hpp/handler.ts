@@ -1,6 +1,6 @@
-import { genOrderId, getCurrentOrderId } from "@mahasak/femto-shared/data"
-import { sendButtonTemplate, sendGenericTemplate, sendTextMessage } from "@mahasak/femto-shared/messenger"
-import { debug } from "@mahasak/femto-shared/utils"
+import { genOrderId, getCurrentOrderId } from "@femto-sh/femto-shared/data"
+import { sendButtonTemplate, sendGenericTemplate, sendTextMessage } from "@femto-sh/femto-shared/messenger"
+import { debug } from "@femto-sh/femto-shared/utils"
 
 import { AdditionalAmount, FeatureConfig, ProductItem, cancelInvoice, completeInvoice, createInvoice, editInvoice, products, switchPaymentMode } from "./api"
 

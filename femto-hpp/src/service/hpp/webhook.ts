@@ -1,6 +1,6 @@
-import { ChangesEvent, MessagingEvent } from "@mahasak/femto-shared/types"
-import { sendTextMessage } from "@mahasak/femto-shared/messenger"
-import { debug } from "@mahasak/femto-shared/utils"
+import { ChangesEvent, MessagingEvent } from "@femto-sh/femto-shared/types"
+import { sendTextMessage } from "@femto-sh/femto-shared/messenger"
+import { debug } from "@femto-sh/femto-shared/utils"
 import { defaultAdditionalAmount, defaultProductItem, genProductItems, products } from "./api"
 import { cancelOrderHandler, completeOrderHandler, createOrderHandler, editOrderHandler, helpHandler, listProductHandler, switchPaymentModeHandler } from "./handler"
 
