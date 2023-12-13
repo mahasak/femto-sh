@@ -14,7 +14,7 @@
     "prisma": "^5.6.0",
     "typescript": "^5.1.6"
   },
-  "name": "@femto-sh/core",
+  "name": "@femto-sh/femto-shared",
   "version": "0.0.1",
   "scripts": {
     "db:introspect": "dotenv -- prisma introspect",
@@ -22,7 +22,7 @@
     "postinstall": "tsc && npx prisma generate"
   },
   "publishConfig": {
-    "@mahasak:registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "author": "",
   "license": "ISC",
