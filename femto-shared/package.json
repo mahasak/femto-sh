@@ -1,0 +1,40 @@
+{
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "colors": "^1.4.0",
+    "dotenv": "^16.3.1",
+    "ioredis": "^5.3.2",
+    "node-ts-cache": "^4.4.0",
+    "node-ts-cache-storage-ioredis": "^4.4.0",
+    "node-ts-cache-storage-memory": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.5",
+    "dotenv-cli": "^7.3.0",
+    "prisma": "^5.6.0",
+    "typescript": "^5.1.6"
+  },
+  "name": "@femto-sh/core",
+  "version": "0.0.1",
+  "scripts": {
+    "db:introspect": "dotenv -- prisma introspect",
+    "db:generate": "dotenv -- prisma generate",
+    "postinstall": "tsc && npx prisma generate"
+  },
+  "publishConfig": {
+    "@mahasak:registry": "https://npm.pkg.github.com"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "exports": {
+    "./*": "./dist/*.js"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*"
+      ]
+    }
+  }
+}

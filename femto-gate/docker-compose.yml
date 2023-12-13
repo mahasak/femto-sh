@@ -1,0 +1,10 @@
+version: "3.7"
+
+services:
+  femto-gate:
+    container_name: femto-gate
+    restart: always
+    build: .
+    env_file: .env
+    ports:
+      - 8080:8080
