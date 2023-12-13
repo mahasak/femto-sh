@@ -1,4 +1,4 @@
-import { getPrismaClient } from "@mahasak/femto-sh-schema";
+import { getPrismaClient } from "@femto-sh/femto-shared/prisma";
 
 export const getPrisma = async () => {
   const { prisma } = await getPrismaClient();

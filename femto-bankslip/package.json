@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@datalust/winston-seq": "^2.0.0",
-    "@mahasak/femto-sh-schema": "github:mahasak/femto-sh-schema",
+    "@femto-sh/femto-shared": "^0.0.1",
     "@prisma/client": "^5.0.0",
     "@sinclair/typebox": "^0.29.6",
     "@theinternetfolks/snowflake": "^1.3.0",

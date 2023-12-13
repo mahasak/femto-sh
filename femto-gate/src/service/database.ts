@@ -1,5 +1,5 @@
-import { getPrisma } from "@mahasak/femto-shared/prisma";
-import { redisCache } from "@mahasak/femto-shared/cache";
+import { getPrisma } from "@femto-sh/femto-shared/prisma";
+import { redisCache } from "@femto-sh/femto-shared/cache";
 
 export const genOrderId = async (shop_id: string): Promise<string> => {
   const prisma = await getPrisma();

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { WebhookEntry } from './types';
 import { getTopic, isEligble } from '../../service/database';
-import { redisClient } from '@mahasak/femto-shared/cache';
+import { redisClient } from '@femto-sh/femto-shared/cache';
 import { Snowflake } from "@theinternetfolks/snowflake";
 
 export const dispatchMessage = async (req: Request, res: Response) => {

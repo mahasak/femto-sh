@@ -4,7 +4,7 @@ dotenv.config();
 import bodyParser from 'body-parser';
 import { messengerRoutes } from './webhook/messenger/routes';
 import { Snowflake } from "@theinternetfolks/snowflake";
-import { clearChannelCache,  verifyApiKey, updateChannelData }from '@mahasak/femto-shared/data'
+import { clearChannelCache,  verifyApiKey, updateChannelData }from '@femto-sh/femto-shared/data'
 
 const app: Express = express();
 const port = process.env.PORT ?? 8080;
