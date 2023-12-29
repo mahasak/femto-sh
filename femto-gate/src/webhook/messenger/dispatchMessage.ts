@@ -3,6 +3,7 @@ import { WebhookEntry } from './types';
 import { getTopic, isEligble } from '../../service/database';
 import { redisClient } from '@femto-sh/femto-shared/cache';
 import { Snowflake } from "@theinternetfolks/snowflake";
+import {log} from "../../service/logger"
 
 export const dispatchMessage = async (req: Request, res: Response) => {
   const data = req.body;
@@ -22,6 +23,17 @@ export const dispatchMessage = async (req: Request, res: Response) => {
 
           console.log(pageEntry);
           console.log(`publish message to [${topic}]`, JSON.stringify(pageEntry));
+          
+          if(pageEntry && pageEntry.id) {
+            const payload = {
+              module: "gate",
+              id: pageEntry.id,
+              message: `Message ID ${pageEntry.id} detected`
+            }
+
+            await log(payload);
+          }
+          
           await redisClient.publish(topic, JSON.stringify(pageEntry));
         });
       }
