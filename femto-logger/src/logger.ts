@@ -14,32 +14,21 @@ const seqTransport = new SeqTransport({
   handleRejections: true,
 });
 
-export const logging = createLogger({
-  transports: [new transports.Console(), seqTransport],
-  format: format.combine(
-    format.colorize(),
-    format.timestamp(),
-    format.printf(({ timestamp, level, message, service }) => {
-      return `[${timestamp}] ${service} ${level}: ${message}`;
-    })
-  ),
-  defaultMeta: {
-    application: "Femto Shell",
-  },
-});
-
 export type LoggingMetadata = {
   applicationName?: string;
-  service: string;
+  module?: string;
+  service?: string;
   country?: number;
 };
+
+console.log(seqTransport)
 
 export const getLogger = (metadata?: LoggingMetadata) => {
   const defaultMetadata = {
     application: process.env.APPLICATION_NAME,
   }
 
-  const parameterizeMetadata = metadata ?? { service: "core" }
+  const parameterizeMetadata = metadata ?? { service: "none" }
   const allowTransport = []
   if (process.env.LOG_TO_CONSOLE === "1") {
     allowTransport.push(new transports.Console())

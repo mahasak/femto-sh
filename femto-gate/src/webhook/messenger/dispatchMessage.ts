@@ -23,12 +23,13 @@ export const dispatchMessage = async (req: Request, res: Response) => {
 
           console.log(pageEntry);
           console.log(`publish message to [${topic}]`, JSON.stringify(pageEntry));
-          
+
           if(pageEntry && pageEntry.id) {
             const payload = {
+              level: "info",
               module: "gate",
               id: pageEntry.id,
-              message: `Message ID ${pageEntry.id} detected`
+              message: "[{application}] [{module}] - Message ID {id} received"
             }
 
             await log(payload);
