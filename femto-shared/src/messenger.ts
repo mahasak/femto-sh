@@ -1,6 +1,6 @@
 import {genChannelData} from "./data";
 
-export const callSendAPI = async (page_id: string, message_data: any) => {
+export const callSendAPI = async (traceId: string, page_id: string, message_data: any) => {
     try {
         const pageConfig = await genChannelData("FACEBOOK_PAGE", page_id);
         if (pageConfig && pageConfig.token && pageConfig.token !== "") {
@@ -26,7 +26,7 @@ export const callSendAPI = async (page_id: string, message_data: any) => {
     }
 }
 
-export const markSeen = async (page_id: string, psid: string) => {
+export const markSeen = async (traceId: string, page_id: string, psid: string) => {
     const messageData = {
         recipient: {
             id: psid
@@ -34,10 +34,10 @@ export const markSeen = async (page_id: string, psid: string) => {
         "sender_action": "mark_seen"
     };
 
-    await callSendAPI(page_id, messageData);
+    await callSendAPI(traceId, page_id, messageData);
 }
 
-export const sendButtonTemplate = async (page_id: string, recipientId: string, message: string, buttons: any) => {
+export const sendButtonTemplate = async (traceId: string, page_id: string, recipientId: string, message: string, buttons: any) => {
     const payload = {
         recipient: {
             id: recipientId
@@ -54,10 +54,10 @@ export const sendButtonTemplate = async (page_id: string, recipientId: string, m
         }
     };
 
-    await callSendAPI(page_id, payload);
+    await callSendAPI(traceId, page_id, payload);
 }
 
-export const sendGenericTemplate = async (page_id: string, recipientId: string, elements: any) => {
+export const sendGenericTemplate = async (traceId: string, page_id: string, recipientId: string, elements: any) => {
     const payload = {
         recipient: {
             id: recipientId
@@ -73,10 +73,10 @@ export const sendGenericTemplate = async (page_id: string, recipientId: string, 
         }
     };
 
-    await callSendAPI(page_id, payload);
+    await callSendAPI(traceId, page_id, payload);
 }
 
-export const sendMessageTemplate = async (page_id: string, recipientId: string, template: any) => {
+export const sendMessageTemplate = async (traceId: string, page_id: string, recipientId: string, template: any) => {
     const payload = {
         recipient: {
             id: recipientId
@@ -84,10 +84,10 @@ export const sendMessageTemplate = async (page_id: string, recipientId: string, 
         message: template
     };
 
-    await callSendAPI(page_id, payload);
+    await callSendAPI(traceId, page_id, payload);
 }
 
-export const sendQuickReplies = async (page_id: string, recipientId: string, messageText: string, choices: any) => {
+export const sendQuickReplies = async (traceId: string, page_id: string, recipientId: string, messageText: string, choices: any) => {
     const payload = {
         recipient: {
             id: recipientId
@@ -99,10 +99,10 @@ export const sendQuickReplies = async (page_id: string, recipientId: string, mes
         }
     };
 
-    await callSendAPI(page_id, payload);
+    await callSendAPI(traceId, page_id, payload);
 }
 
-export const sendTextMessage = async (page_id: string, recipientId: string, messageText: string) => {
+export const sendTextMessage = async (traceId: string, page_id: string, recipientId: string, messageText: string) => {
     const messageData = {
         recipient: {
             id: recipientId
@@ -112,5 +112,5 @@ export const sendTextMessage = async (page_id: string, recipientId: string, mess
         }
     };
 
-    await callSendAPI(page_id, messageData);
+    await callSendAPI(traceId, page_id, messageData);
 }
