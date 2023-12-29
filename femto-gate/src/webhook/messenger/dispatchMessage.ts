@@ -30,7 +30,7 @@ export const dispatchMessage = async (req: Request, res: Response) => {
             level: "info",
             module: "gate",
             traceId: wrappedMessage.traceId,
-            message: "[{application}] [{module}] - Message ID {id} received"
+            message: "[{application}] [{module}] - Request with trace ID {traceId} started"
           }
 
           await log(payload);
