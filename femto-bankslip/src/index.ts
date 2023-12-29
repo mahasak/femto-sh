@@ -4,7 +4,7 @@ dotenv.config();
 import bodyParser from 'body-parser';
 import { redisClient } from "./service/redis"
 import { bankslipDetectionChangesHook, bankslipDetectionMessageHook, bankslipDetectionPostbackHook, bankslipDetectionQuickReplyHook } from './service/bankslip';
-import { ChangesEvent, MessagingEvent } from './types';
+import { ChangesEvent, MessagingEvent, WrappedMessage } from './types';
 const app: Express = express();
 const port = process.env.PORT ?? 8081;
 
@@ -21,19 +21,22 @@ app.listen(port, async () => {
 
     subscriber.on("message", function (channel, topicMessage) {
       console.log("Message: " + topicMessage + " on channel: " + channel + " is arrive!");
+
+      
+      
       if (topicMessage && topicMessage !== "") {
         try {
-          const webhookEntry = JSON.parse(topicMessage)
-          if (webhookEntry && webhookEntry.messaging) {
-            const messaging = webhookEntry.messaging;
+          const wrappedMessage: WrappedMessage = JSON.parse(topicMessage)
+          if (wrappedMessage && wrappedMessage.pageEntry.messaging) {
+            const messaging = wrappedMessage.pageEntry.messaging;
             messaging.forEach(async (message: any) => {
               await processWebhookMessages(message);
             });
             // await bankslipDetectionMessageHook(event)
           }
 
-          if (webhookEntry && webhookEntry.changes) {
-            webhookEntry.changes.forEach(async function (changes: ChangesEvent) {
+          if (wrappedMessage && wrappedMessage.pageEntry.changes) {
+            wrappedMessage.pageEntry.changes.forEach(async function (changes: ChangesEvent) {
               await bankslipDetectionChangesHook(changes);
             });
           }

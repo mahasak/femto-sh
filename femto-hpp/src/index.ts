@@ -10,6 +10,19 @@ const app: Express = express();
 const port = process.env.SERVER_PORT ?? 8082;
 const topic = process.env.REDIS_TOPIC_NAME ?? "";
 
+export interface WebhookEntry {
+  id: string;
+  time: number;
+  messaging?: any;
+  changes?: any;
+}
+
+
+export interface WrappedMessage {
+  traceId: string;
+  pageEntry: WebhookEntry;
+}
+
 console.log(topic)
 app.use(express.json());
 
@@ -27,16 +40,16 @@ app.listen(port, () => {
       console.log("Message: " + topicMessage + " on channel: " + channel + " is arrive!");
       if (topicMessage && topicMessage !== "") {
         try {
-          const webhookEntry = JSON.parse(topicMessage)
-          if (webhookEntry && webhookEntry.messaging) {
-            const messaging = webhookEntry.messaging;
+          const wrappedMessage : WrappedMessage = JSON.parse(topicMessage)
+          if (wrappedMessage && wrappedMessage.pageEntry.messaging) {
+            const messaging = wrappedMessage.pageEntry.messaging;
             messaging.forEach(async (message: any) => {
               await processWebhookMessages(message);
             });
           }
 
-          if (webhookEntry && webhookEntry.changes) {
-            webhookEntry.changes.forEach(async function (changes: ChangesEvent) {
+          if (wrappedMessage && wrappedMessage.pageEntry && wrappedMessage.pageEntry.changes) {
+            wrappedMessage.pageEntry.changes.forEach(async function (changes: ChangesEvent) {
               await changeHook(changes);
             });
           }

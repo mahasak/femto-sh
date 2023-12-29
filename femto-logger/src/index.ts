@@ -32,6 +32,12 @@ process.on('SIGINT', () => {
   }
 });
 
+export interface LogFormat {
+  level: string,
+  module: string,
+  traceId: string,
+  message: string
+}
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
@@ -41,19 +47,19 @@ app.listen(port, () => {
     subscriber.on("message", function (channel:string , topicMessage: any) {
       console.log("Message: " + topicMessage + " on channel: " + channel + " is arrive!");
       if (topicMessage && topicMessage !== "") {
-        const message = JSON.parse(topicMessage);
-        console.log(message);
+        const logMessage: LogFormat = JSON.parse(topicMessage);
+        console.log(logMessage);
         //logger.info(topicMessage.message, {name: "World"});)
         const metadata:any = {application: "femto-sh"}
-        if(message.id) {
-          metadata.id = message.id;
+        if(logMessage.traceId) {
+          metadata.traceId = logMessage.traceId;
         }
-        if(message.module) {
-          metadata.module = message.module;
+        if(logMessage.module) {
+          metadata.module = logMessage.module;
         }
 
         console.log()
-        logger.info("Message {id} received", metadata);
+        logger.info(logMessage.message, metadata);
       }
     });
 

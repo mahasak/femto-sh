@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
-import { WebhookEntry } from './types';
+import { LogFormat, WebhookEntry, WrappedMessage } from './types';
 import { getTopic, isEligble } from '../../service/database';
 import { redisClient } from '@femto-sh/femto-shared/cache';
 import { Snowflake } from "@theinternetfolks/snowflake";
 import {log} from "../../service/logger"
+
+
 
 export const dispatchMessage = async (req: Request, res: Response) => {
   const data = req.body;
@@ -16,26 +18,23 @@ export const dispatchMessage = async (req: Request, res: Response) => {
       if (await isEligble(pageEntry.id)) {
         const topics = await getTopic(pageEntry.id);
         topics.forEach(async (topic) => {
-          const wrappedMessage = {
-            trace_id: Snowflake.generate({timestamp: Date.now()}),
-            contents: pageEntry
+          const wrappedMessage: WrappedMessage = {
+            traceId: Snowflake.generate({timestamp: Date.now()}),
+            pageEntry: pageEntry
           };
 
-          console.log(pageEntry);
-          console.log(`publish message to [${topic}]`, JSON.stringify(pageEntry));
+          console.log(wrappedMessage);
+          console.log(`publish message to [${topic}]`, JSON.stringify(wrappedMessage));
 
-          if(pageEntry && pageEntry.id) {
-            const payload = {
-              level: "info",
-              module: "gate",
-              id: pageEntry.id,
-              message: "[{application}] [{module}] - Message ID {id} received"
-            }
-
-            await log(payload);
+          const payload: LogFormat = {
+            level: "info",
+            module: "gate",
+            traceId: wrappedMessage.traceId,
+            message: "[{application}] [{module}] - Message ID {id} received"
           }
-          
-          await redisClient.publish(topic, JSON.stringify(pageEntry));
+
+          await log(payload);
+          await redisClient.publish(topic, JSON.stringify(wrappedMessage));
         });
       }
     });

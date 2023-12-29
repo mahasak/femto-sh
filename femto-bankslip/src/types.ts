@@ -1,4 +1,8 @@
 // See https://developers.facebook.com/docs/messenger-platform/webhook-reference
+export interface WrappedMessage {
+  traceId: string;
+  pageEntry: WebhookEntry;
+}
 
 export interface WebhookEvent {
   object: 'page';
